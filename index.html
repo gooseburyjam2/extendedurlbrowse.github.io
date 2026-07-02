@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>uBrowser // Universal Multi-User Cloud Registry v6.5</title> <style> body { background-color: #FFFFFF; font-family: Arial, sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: #202124; box-sizing: border-box; } .browser-container { width: 100%; max-width: 584px; text-align: center; position: relative; } .logo-text { font-size: 4.5rem; font-weight: bold; letter-spacing: -2px; margin-bottom: 25px; font-family: Arial, sans-serif; } .logo-g1 { color: #4285F4; } .logo-j { color: #EA4335; } .logo-b { color: #FBBC05; } .logo-r { color: #4285F4; } .logo-o { color: #34A853; } .logo-w { color: #EA4335; }
+    .logo-sub {
+        font-size: 0.85rem;
+        color: #5f6368;
+        margin-top: -20px;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: bold;
+    }
+    .search-bar {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: 1px solid #EFEFEF;
+        border-radius: 24px;
+        outline: none;
+        box-shadow: 0 1px 6px rgba(32,33,36,0.18);
+        box-sizing: border-box;
+        transition: box-shadow 0.1s;
+    }
+    .search-bar:hover, .search-bar:focus {
+        box-shadow: 0 2px 8px rgba(32,33,36,0.28);
+        border-color: rgba(223,225,229,0);
+    }
+    .btn-container {
+        margin-top: 15px;
+        margin-bottom: 25px;
+    }
+    .btn {
+        background-color: #F8F9FA;
+        border: 1px solid #F8F9FA;
+        color: #3C4043;
+        padding: 10px 16px;
+        font-size: 14px;
+        margin: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: inherit;
+    }
+    .btn:hover {
+        border: 1px solid #C6C6C6;
+        color: #202124;
+        background-color: #F1F3F4;
+    }
+    .hud-plugin-sidebar {
+        position: absolute;
+        top: -40px;
+        right: -240px;
+        width: 200px;
+        background-color: #FFFFFF;
+        border: 2px solid #4285F4;
+        box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        padding: 12px;
+        text-align: left;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.85rem;
+        box-sizing: border-box;
+    }
+    .plugin-title {
+        background-color: #4285F4;
+        color: white;
+        padding: 2px 5px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+    .status-feed {
+        background-color: #000000;
+        color: #00FF00;
+        padding: 6px;
+        font-size: 0.75rem;
+        height: 80px;
+        overflow-y: auto;
+        margin-top: 10px;
+        box-sizing: border-box;
+    }
+    .dev-panel {
+        margin-top: 20px;
+        border: 2px dashed #CD853F;
+        padding: 15px;
+        background-color: #FFF8DC;
+        text-align: left;
+        border-radius: 8px;
+    }
+    .dev-panel h3 {
+        margin-top: 0;
+        color: #8B4513;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+    textarea {
+        width: 100%;
+        font-family: monospace;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #CD853F;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+    .custom-site-render {
+        width: 100%;
+        border: 3px double #4285F4;
+        padding: 20px;
+        margin-top: 20px;
+        background-color: #FAF9F6;
+        box-sizing: border-box;
+        display: none;
+        text-align: left;
+    }
+</style>
+</head> <body>
+<div class="browser-container" id="mainBrowser"> <div class="hud-plugin-sidebar"> <p class="plugin-title">GJ CLOUD v6.5</p> <strong>Profile ID:</strong> <input type="text" id="profileIdInput" value="Goosebury_jam" onchange="syncCloudTelemetry()" style="width: 80px; font-size: 0.75rem; padding: 2px; border: 1px solid #4285F4; font-family: inherit;"><br> <strong>Player Age:</strong> <span id="ageDisplay">16</span><br> <strong>Your Tokens:</strong> <span id="tokenDisplay">Loading...</span><br> <strong>Ban Matrix:</strong> ARMED 🛡️<br> <strong>Registry:</strong> 15 Extensions <div class="status-feed" id="pluginFeed"> [SYS] v6.5 online. Loaded .resort, .like, and .love endpoints. </div> </div>
+<div class="logo-text">
+    <span class="logo-g1">u</span><span class="logo-j">B</span><span class="logo-b">r</span><span class="logo-r">o</span><span class="logo-o">w</span><span class="logo-w">s</span><span class="logo-g1">e</span><span class="logo-j">r</span>
+</div>
+<div class="logo-sub">Universal Build // Social Package v6.5</div>
+
+<form id="searchForm" onsubmit="processUniversalRequest(event)">
+    <div class="search-box-wrapper">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search Google, buy a custom .resort link, or report an asset..." autocomplete="off" required>
+    </div>
+    <div class="btn-container">
+        <button type="submit" class="btn">Execute Routing / Load Webpage</button>
+        <button type="button" class="btn" onclick="openDevPanel()">Claim / Edit Custom Domain</button>
+        <button type="button" class="btn" style="background-color: #FFC0CB;" onclick="submitReportFlag()">⚠️ Report Last Viewed Domain</button>
+    </div>
+</form>
+
+<div class="dev-panel" id="devPanel" style="display: none;">
+    <h3>🛒 Central Domain Registration & Editor</h3>
+    <p style="font-size: 0.8rem; margin: 0 0 10px 0; color: #555;">Cost: 500 Tokens. 15 custom layout extensions unlocked!</p>
+    
+    <label style="font-weight: bold; font-size: 0.85rem;">Desired URL Address:</label>
+    <input type="text" id="newUrlInput" placeholder="myroom.resort" autocomplete="off" style="width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #CD853F; box-sizing: border-box;"><br>
+    
+    <label style="font-weight: bold; font-size: 0.85rem;">Write Your Custom HTML Website Code:</label>
+    <textarea id="siteHtmlInput" rows="6" placeholder="<h1>Welcome to the resort!</h1>" style="width: 100%; font-family: monospace; padding: 8px; box-sizing: border-box; border: 1px solid #CD853F; margin-top: 5px; margin-bottom: 10px;"></textarea><br>
+    
+    <button type="button" class="btn" style="background-color: #98FB98; width: 100%; margin: 0;" onclick="registerAndPublishDomain()">Purchase & Publish Site</button>
+</div>
+</div>
+<div class="custom-site-render" id="siteViewer"> <button class="btn" style="margin-bottom: 15px; padding: 5px 10px; font-size: 0.8rem;" onclick="closeSiteViewer()">⬅️ Return to Browser Search</button> <div id="siteContentFrame"></div> </div>
+<script> const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwoHHmOHE2uZo_67EaMMm9tvEGWPQ__jVOGYEU9Ug23kATGoJHGzy8nq9ORmLjF6cmJ8A/exec"; let cachedTokens = 0; let cachedAge = 0; let lastViewedDomain = ""; const BANNED_WORDS = ["badword1", "badword2", "jerk", "stupid", "hack", "cheat"]; function logToFeed(message) { const feed = document.getElementById('pluginFeed'); feed.innerHTML += "<br>" + message; feed.scrollTop = feed.scrollHeight; } function checkProfanity(text) { const lowerText = text.toLowerCase(); for (let word of BANNED_WORDS) { if (lowerText.includes(word)) return true; } return false; } function syncCloudTelemetry() { const profileId = document.getElementById('profileIdInput').value.trim(); if (APPS_SCRIPT_URL.includes("YOUR_DEPLOYED_SCRIPT_ID")) { cachedTokens = 9000; cachedAge = 16; document.getElementById('tokenDisplay').innerText = cachedTokens; document.getElementById('ageDisplay').innerText = cachedAge; logToFeed("[DEMO] Running offline fallback simulator mode."); return; } fetch(APPS_SCRIPT_URL + "?action=getProfile&profileId=" + encodeURIComponent(profileId)) .then(res => res.json()) .then(data => { cachedTokens = parseInt(data.tokens); cachedAge = parseInt(data.age || "13"); document.getElementById('tokenDisplay').innerText = cachedTokens; document.getElementById('ageDisplay').innerText = cachedAge; if (cachedTokens <= -9000) { document.body.innerHTML = "<h1 style='color:red; text-align:center; margin-top:20vh;'>🚨 PROFILE UNDER BAN OVERRIDE LOCKOUT 🚨</h1><p style='text-align:center; color:#555;'>Your account has been restricted by UltraIndustries. Balance current status: " + cachedTokens + " Tokens.</p>"; } }) .catch(err => logToFeed("[ERROR] Sync handshake timeout. Check Web App URL.")); } function openDevPanel() { const panel = document.getElementById('devPanel'); panel.style.display = panel.style.display === 'none' ? 'block' : 'none'; } function closeSiteViewer() { document.getElementById('siteViewer').style.display = 'none'; document.getElementById('mainBrowser').style.display = 'block'; } function hasValidExtension(url) { const extensions = ['.prank', '.joke', '.wacky', '.cool', '.crazy', '.super', '.odd', '.awkward', '.soda', '.ad', '.brand', '.true', '.resort', '.like', '.love']; for (let ext of extensions) { if (url.endsWith(ext)) return true; } return false; } function submitReportFlag() { if (!lastViewedDomain) { alert("REPORT ERROR: No custom webpage opened yet!"); return; } const reporterId = document.getElementById('profileIdInput').value.trim(); logToFeed("[REPORT] Flagging asset: " + lastViewedDomain + " for Admin Review..."); if (APPS_SCRIPT_URL.includes("YOUR_DEPLOYED_SCRIPT_ID")) { alert("⚠️ REPORT SENT: '" + lastViewedDomain + "' flagged locally!"); return; } fetch(APPS_SCRIPT_URL + "?action=reportDomain&profileId=" + encodeURIComponent(reporterId) + "&url=" + encodeURIComponent(lastViewedDomain), { method: "GET" }) .then(() => { alert("🚨 REPORT TRANSMITTED SUCCESSFULLY! Admin desk notified."); }); } function registerAndPublishDomain() { const targetUrl = document.getElementById('newUrlInput').value.trim().toLowerCase(); const customHtml = document.getElementById('siteHtmlInput').value.trim(); const profileId = document.getElementById('profileIdInput').value.trim(); if (cachedAge < 13) { alert("SAFETY GATES LOCK: Accounts under the age of 13 cannot compile custom scripts!"); return; } if (!hasValidExtension(targetUrl)) { alert("REGISTRATION ERROR: Invalid extension suffix domain string!"); return; } if (checkProfanity(targetUrl) || checkProfanity(customHtml)) { alert("🚨 PROFANITY BLOCK: Inappropriate content detected!"); return; } if (APPS_SCRIPT_URL.includes("YOUR_DEPLOYED_SCRIPT_ID")) { cachedTokens -= 500; document.getElementById('tokenDisplay').innerText = cachedTokens; localStorage.setItem('sim_' + targetUrl, customHtml); alert("🎉 Offline simulation purchase locked!"); return; } fetch(APPS_SCRIPT_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "action=registerDomain&profileId=" + encodeURIComponent(profileId) + "&url=" + encodeURIComponent(targetUrl) + "&html=" + encodeURIComponent(customHtml) }).then(() => { alert("🎉 CENTRAL REGISTRY SUCCESS! Web address active cross-campus."); setTimeout(syncCloudTelemetry, 1000); document.getElementById('devPanel').style.display = 'none'; document.getElementById('newUrlInput').value = ''; document.getElementById('siteHtmlInput').value = ''; }); } function processUniversalRequest(event) { event.preventDefault(); const userInput = document.getElementById('searchInput').value.trim(); const lowerInput = userInput.toLowerCase(); if (lowerInput === 'gooseburyjam.prank') { window.location.href = "https://gooseburyjam.github.io"; return; } if (lowerInput === 'gooseburyjam2.joke') { window.location.href = "https://gooseburyjam2.github.io"; return; } if (APPS_SCRIPT_URL.includes("YOUR_DEPLOYED_SCRIPT_ID")) { const fallbackHtml = localStorage.getItem('sim_' + lowerInput); if (fallbackHtml) { lastViewedDomain = lowerInput; document.getElementById('mainBrowser').style.display = 'none'; document.getElementById('siteViewer').style.display = 'block'; document.getElementById('siteContentFrame').innerHTML = fallbackHtml; return; } } else { fetch(APPS_SCRIPT_URL + "?action=getDomain&url=" + encodeURIComponent(lowerInput)) .then(res => res.json()) .then(data => { if (data.success && data.html) { lastViewedDomain = lowerInput; document.getElementById('mainBrowser').style.display = 'none'; document.getElementById('siteViewer').style.display = 'block'; document.getElementById('siteContentFrame').innerHTML = data.html; } else if (hasValidExtension(lowerInput)) { alert("✨ UNCLAIMED DOMAIN: The address '" + lowerInput + "' is free! Claim it now."); } else { executeStandardFallbackWebLookup(userInput); } }).catch(() => executeStandardFallbackWebLookup(userInput)); return; } if (hasValidExtension(lowerInput)) { alert("✨ UNCLAIMED SIMULATION NAME: Open Developer Panel to claim."); return; } executeStandardFallbackWebLookup(userInput); } function executeStandardFallbackWebLookup(query) { const standardDomainRegex = /\.[a-z]{2,6}(\$|\/)/; const hasWebProtocol = query.toLowerCase().startsWith('http://') || query.toLowerCase().startsWith('https://'); if (standardDomainRegex.test(query.toLowerCase()) || hasWebProtocol) { window.location.href = hasWebProtocol ? query : "https://" + query; } else { window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query); } } syncCloudTelemetry(); </script>
+</body> </html>
