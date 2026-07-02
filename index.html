@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Goosebury Jam Browser // Central Cloud Synced Registry</title> <style> body { background-color: #FFFFFF; font-family: Arial, sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; color: #202124; box-sizing: border-box; } .browser-container { width: 100%; max-width: 584px; text-align: center; position: relative; } .logo-text { font-size: 4.5rem; font-weight: bold; letter-spacing: -2px; margin-bottom: 25px; font-family: Arial, sans-serif; } .logo-g1 { color: #4285F4; } .logo-j { color: #EA4335; } .logo-b { color: #FBBC05; } .logo-r { color: #4285F4; } .logo-o { color: #34A853; } .logo-w { color: #EA4335; }
+    .logo-sub {
+        font-size: 0.85rem;
+        color: #5f6368;
+        margin-top: -20px;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        font-weight: bold;
+    }
+    .search-bar {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: 1px solid #EFEFEF;
+        border-radius: 24px;
+        outline: none;
+        box-shadow: 0 1px 6px rgba(32,33,36,0.18);
+        box-sizing: border-box;
+        transition: box-shadow 0.1s;
+    }
+    .search-bar:hover, .search-bar:focus {
+        box-shadow: 0 2px 8px rgba(32,33,36,0.28);
+        border-color: rgba(223,225,229,0);
+    }
+    .btn-container {
+        margin-top: 15px;
+        margin-bottom: 25px;
+    }
+    .btn {
+        background-color: #F8F9FA;
+        border: 1px solid #F8F9FA;
+        color: #3C4043;
+        padding: 10px 16px;
+        font-size: 14px;
+        margin: 5px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: inherit;
+    }
+    .btn:hover {
+        border: 1px solid #C6C6C6;
+        color: #202124;
+        background-color: #F1F3F4;
+    }
+    .hud-plugin-sidebar {
+        position: absolute;
+        top: -40px;
+        right: -240px;
+        width: 200px;
+        background-color: #FFFFFF;
+        border: 2px solid #4285F4;
+        box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        padding: 12px;
+        text-align: left;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 0.85rem;
+        box-sizing: border-box;
+    }
+    .plugin-title {
+        background-color: #4285F4;
+        color: white;
+        padding: 2px 5px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 8px;
+    }
+    .status-feed {
+        background-color: #000000;
+        color: #00FF00;
+        padding: 6px;
+        font-size: 0.75rem;
+        height: 80px;
+        overflow-y: auto;
+        margin-top: 10px;
+        box-sizing: border-box;
+    }
+    .dev-panel {
+        margin-top: 20px;
+        border: 2px dashed #CD853F;
+        padding: 15px;
+        background-color: #FFF8DC;
+        text-align: left;
+        border-radius: 8px;
+    }
+    .dev-panel h3 {
+        margin-top: 0;
+        color: #8B4513;
+        font-size: 1rem;
+        text-transform: uppercase;
+    }
+    textarea {
+        width: 100%;
+        font-family: monospace;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #CD853F;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+    .custom-site-render {
+        width: 100%;
+        border: 3px double #4285F4;
+        padding: 20px;
+        margin-top: 20px;
+        background-color: #FAF9F6;
+        box-sizing: border-box;
+        display: none;
+        text-align: left;
+    }
+</style>
+</head> <body>
+<div class="browser-container" id="mainBrowser"> <div class="hud-plugin-sidebar"> <p class="plugin-title">GJ CLOUD v3.0</p> <strong>Profile ID:</strong> <input type="text" id="profileIdInput" value="TEAM_1" onchange="syncCloudTelemetry()" style="width: 80px; font-size: 0.75rem; padding: 2px; border: 1px solid #4285F4; font-family: inherit;"><br> <strong>Your Tokens:</strong> <span id="tokenDisplay">Loading...</span><br> <strong>Cloud Sync:</strong> CONNECTED<br> <strong>Registry:</strong> Shared Ledger <div class="status-feed" id="pluginFeed"> [SYS] Pinging Google Apps Script database back-end... </div> </div>
+<div class="logo-text">
+    <span class="logo-g1">G</span><span class="logo-j">J</span><span class="logo-b">b</span><span class="logo-r">r</span><span class="logo-o">o</span><span class="logo-w">w</span>
+</div>
+<div class="logo-sub">Universal Build // Campus Sync Edition</div>
+
+<form id="searchForm" onsubmit="processUniversalRequest(event)">
+    <div class="search-box-wrapper">
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search Google, buy a cross-campus .prank link, or enter a domain..." autocomplete="off" required>
+    </div>
+    <div class="btn-container">
+        <button type="submit" class="btn">Execute Routing / Load Webpage</button>
+        <button type="button" class="btn" onclick="openDevPanel()">Claim / Edit Custom Domain</button>
+    </div>
+</form>
+
+<div class="dev-panel" id="devPanel" style="display: none;">
+    <h3>🛒 Central Domain Registration & Editor</h3>
+    <p style="font-size: 0.8rem; margin: 0 0 10px 0; color: #555;">Cost: 500 Tokens. Updates instantly across all computers!</p>
+    
+    <label style="font-weight: bold; font-size: 0.85rem;">Desired URL Address:</label>
+    <input type="text" id="newUrlInput" placeholder="myname.prank" autocomplete="off" style="width: 100%; padding: 8px; margin-top: 5px; margin-bottom: 15px; border: 1px solid #CD853F; box-sizing: border-box;"><br>
+    
+    <label style="font-weight: bold; font-size: 0.85rem;">Write Your Custom HTML Website Code:</label>
+    <textarea id="siteHtmlInput" rows="6" placeholder="<h1>Hello Team!</h1>" style="width: 100%; font-family: monospace; padding: 8px; box-sizing: border-box; border: 1px solid #CD853F; margin-top: 5px; margin-bottom: 10px;"></textarea><br>
+    
+    <button type="button" class="btn" style="background-color: #98FB98; width: 100%; margin: 0;" onclick="registerAndPublishDomain()">Purchase & Publish Site</button>
+</div>
+</div>
+<div class="custom-site-render" id="siteViewer"> <button class="btn" style="margin-bottom: 15px; padding: 5px 10px; font-size: 0.8rem;" onclick="closeSiteViewer()">⬅️ Return to Browser Search</button> <div id="siteContentFrame"></div> </div>
+<script> // Paste your free deployed Google Apps Script Web App URL between the quotation marks below! const APPS_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYED_SCRIPT_ID/exec"; let cachedTokens = 0; function logToFeed(message) { const feed = document.getElementById('pluginFeed'); feed.innerHTML += "<br>" + message; feed.scrollTop = feed.scrollHeight; } // Automatically pulls token balance data from the central sheet database on boot-up function syncCloudTelemetry() { const profileId = document.getElementById('profileIdInput').value.trim(); logToFeed("[CLOUD] Fetching sync packet for " + profileId + "..."); if (APPS_SCRIPT_URL.includes("YOUR_DEPLOYED_SCRIPT_ID")) { // Local fallback simulator if script URL isn't configured yet cachedTokens = 1500; document.getElementById('tokenDisplay').innerText = cachedTokens; logToFeed("[LOCAL DEMO] Running offline fallback. Setup Apps Script to sync!"); return; } fetch(APPS_SCRIPT_URL + "?action=getProfile&profileId=" + encodeURIComponent(profileId)) .then(res => res.json()) .then(data => { cachedTokens = data.tokens; document.getElementById('tokenDisplay').innerText = cachedTokens; logToFeed("[CLOUD] Sync complete. Balance verified."); }) .catch(err => logToFeed("[ERROR] Sync handshake failed. Core timed out.")); } function openDevPanel() { const panel = document.getElementById('devPanel'); panel.style.display = panel.style.display === 'none' ? 'block' : 'none'; } function closeSiteViewer() { document.getElementById('siteViewer').style.display = 'none'; document.getElementById('mainBrowser').style.display = 'block'; } function registerAndPublishDomain() { const targetUrl = document.getElementById('newUrlInput').value.trim().toLowerCase(); const customHtml = document.getElementById('siteHtmlInput').value.trim(); const profileId = document.getElementById('profileIdInput').value.trim(); if (!targetUrl.endsWith('.prank') && !targetUrl.endsWith('.joke') && !targetUrl.endsWith('.wacky')) { alert("REGISTRATION ERROR: Your custom link address must end strictly in .prank, .joke, or .wacky!"); return; } logToFeed("[TRANSMITTING] Compiling domain ledger registration frame..."); if (APPS_SCRIPT_URL.includes("YOUR_DEPLOYED_SCRIPT_ID")) { // Fallback simulator for offline validation checks if (localStorage.getItem('sim_' + targetUrl)) { alert("🚨 DOMAIN CLAIM DENIED: This website address has already been claimed on this local machine!"); return; } if (cachedTokens < 500) { alert("INSUFFICIENT REVENUE: You do not hold enough tokens!"); return; } cachedTokens -= 500; document.getElementById('tokenDisplay').innerText = cachedTokens; localStorage.setItem('sim_' + targetUrl, customHtml); alert("🎉 OFFLINE SUCCESS! Registered locally. Deploy Apps Script for real multi-room syncing!"); return; } // Transmits data frame via HTTP POST to the central spreadsheet ledger database fetch(APPS_SCRIPT_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "action=registerDomain&profileId=" + encodeURIComponent(profileId) + "&url=" + encodeURIComponent(targetUrl) + "&html=" + encodeURIComponent(customHtml) }).then(() => { alert("🎉 CENTRAL REGISTRY SUCCESS! '" + targetUrl + "' is now active across all resort kiosks."); setTimeout(syncCloudTelemetry, 1000); document.getElementById('devPanel').style.display = 'none'; document.getElementById('newUrlInput').value = ''; document.getElementById('siteHtmlInput').value = ''; }).catch(() => alert("[CRITICAL] Transmission dropped by router firewall!")); } function processUniversalRequest(event) { event.preventDefault(); const userInput = document.getElementById('searchInput').value.trim(); const lowerInput = userInput.toLowerCase(); logToFeed("[QUERY] Requesting endpoint mapping: " + userInput); if (lowerInput === 'gooseburyjam.prank') { window.location.href = "https://gooseburyjam.github.io"; return; } if (lowerInput === 'gooseburyjam2.joke') { window.location.href = "https://gooseburyjam2.github.io"; return; } if (APPS_SCRIPT_URL.includes("YOUR_DEPLOYED_SCRIPT_ID")) { const fallbackHtml = localStorage.getItem('sim_' + lowerInput); if (fallbackHtml) { document.getElementById('mainBrowser').style.display = 'none'; document.getElementById('siteViewer').style.display = 'block'; document.getElementById('siteContentFrame').innerHTML = fallbackHtml; return; } } else { // Pulls live site HTML data dynamically straight out of the central global sheet ledger fetch(APPS_SCRIPT_URL + "?action=getDomain&url=" + encodeURIComponent(lowerInput)) .then(res => res.json()) .then(data => { if (data.success && data.html) { logToFeed("[LEDGER SUCCESS] Rendering cloud website data streams safely..."); document.getElementById('mainBrowser').style.display = 'none'; document.getElementById('siteViewer').style.display = 'block'; document.getElementById('siteContentFrame').innerHTML = data.html; } else if (lowerInput.endsWith('.prank') || lowerInput.endsWith('.joke') || lowerInput.endsWith('.wacky')) { alert("✨ UNCLAIMED DOMAIN: The address '" + lowerInput + "' is free across all campus rooms! Claim it now."); } else { executeStandardFallbackWebLookup(userInput); } }).catch(() => executeStandardFallbackWebLookup(userInput)); return; } if (lowerInput.endsWith('.prank') || lowerInput.endsWith('.joke') || lowerInput.endsWith('.wacky')) { alert("✨ UNCLAIMED DOMAIN: Opening editor panel options."); return; } executeStandardFallbackWebLookup(userInput); } function executeStandardFallbackWebLookup(query) { const standardDomainRegex = /\.[a-z]{2,6}(\$|\/)/; const hasWebProtocol = query.toLowerCase().startsWith('http://') || query.toLowerCase().startsWith('https://'); if (standardDomainRegex.test(query.toLowerCase()) || hasWebProtocol) { window.location.href = hasWebProtocol ? query : "https://" + query; } else { window.location.href = "https://www.google.com/search?q=" + encodeURIComponent(query); } } // Initialize telemetry verification loop on startup frame syncCloudTelemetry(); </script>
+</body> </html>
